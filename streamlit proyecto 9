@@ -1,0 +1,178 @@
+import streamlit as st
+import numpy as np
+import pandas as pd
+from PIL import Image
+import geihdanepy as geih
+import pickle as pk
+import pandas as pd
+import numpy as np
+import streamlit as st
+
+
+
+page_bg_img = """
+<style>
+[data-testid="stAppViewContainer"]{
+background-color: #D1F0EB;
+background-size: cover;
+}
+
+[data-testid="stHeader"]{
+background-color: rgb(0,0,0,0);
+}
+
+[data-testid="stSidebar"]{
+background-color:#E9F5EC ;
+}
+
+</style>
+"""
+
+
+st.markdown(page_bg_img, unsafe_allow_html=True)
+
+st.sidebar.markdown(f'<h1 style="text-align: center; color:#F7D559;font-size:35px;">{"INTRODUCCIÓN"}</h1>', unsafe_allow_html=True)
+st.sidebar.markdown(f'<h1 style="text-align: center; color:#000000;font-size:22px;">{"AQUÍ ESCRIBE"}</h1>', unsafe_allow_html=True)
+
+
+
+st.sidebar.markdown(f'<h1 style="text-align: center ; color:#F4D03F ;font-size:35px;">{"AUTORES:"}</h1>', unsafe_allow_html=True)
+
+st.sidebar.markdown(f'<h1 style="text-align: center ; color:#000000 ;font-size:22px;">{"Valeria Mendez"}</h1>', unsafe_allow_html=True)
+st.sidebar.markdown(f'<h1 style="text-align: center ; color:#000000 ;font-size:22px;">{"Gerardo Pardo"}</h1>', unsafe_allow_html=True)
+st.sidebar.markdown(f'<h1 style="text-align: center ; color:#000000 ;font-size:22px;">{"Juan Bohórquez"}</h1>', unsafe_allow_html=True)
+
+
+
+st.sidebar.markdown(f'<h1 style="text-align: center; color:#F4D03F ;font-size:30px;">{"FACULDAD DE ECONOMÍA"}</h1>', unsafe_allow_html=True)
+
+
+
+st.markdown(f'<h1 style="color:#0E6655  ;font-size:50px;">{"Proyecto 9"}</h1>', unsafe_allow_html=True)
+st.markdown(f'<h1 style="color:#000000  ;font-size:25px;">{"En este proyecto se analizará el ingreso de los trabajadores mediante el modelo Random Forest, logrando así obtener un modelo que logre predecir el salario por medio de las siguientes variables:"}</h1>', unsafe_allow_html=True)
+
+#df_1 = pd.read_csv('GEIH_ocupados.csv.crdownload')
+#df_2 = df_1[['P6426','P6510','P6590','P6990','P6430','P6500','INGLABO']]
+#st.write(df_2.columns)
+
+st.markdown(f'<h1 style="color:#0E6655  ;font-size:35px;">{"Descripción sucinta de las variables"}</h1>', unsafe_allow_html=True)
+st.markdown(f'<h1 style="color:#9A7D0A  ;font-size:25px;">{"Variable dependiente: INGLABO:"}</h1>', unsafe_allow_html=True)
+st.write('Constituye los ingresos laborales')
+st.markdown(f'<h1 style="color:#9A7D0A  ;font-size:25px;">{"P6426:"}</h1>', unsafe_allow_html=True)
+st.write('Es el tiempo que lleva trabajando en la misma empresa')
+st.markdown(f'<h1 style="color:#9A7D0A  ;font-size:25px;">{"P6510:"}</h1>', unsafe_allow_html=True)
+st.write('Es la variable de ingresos por horas extra del mes pasado. Siendo 1: Si, 2: No, 3: No sabe, no informa')
+st.markdown(f'<h1 style="color:#9A7D0A  ;font-size:25px;">{"P6590:"}</h1>', unsafe_allow_html=True)
+st.write('Indica si el trabajador recibió, además del salario en dinero, alimentos como parte de pago por su trabajo el mes pasado. Siendo 1: Si, 2: No, 3: No sabe, no informa')
+st.markdown(f'<h1 style="color:#9A7D0A  ;font-size:25px;">{"P6990:"}</h1>', unsafe_allow_html=True)
+st.write('Hace referencia a la afiliación del trabajador a una aseguradora de riesgos profesionales. Siendo 1: Si, 2: No, 3: No sabe, no informa')
+st.markdown(f'<h1 style="color:#9A7D0A  ;font-size:25px;">{"P6430:"}</h1>', unsafe_allow_html=True)
+st.write('Indica su posición en el trabajo. Siendo 1: Obrero o empleado de empresa particular, 2: Obrero o empleado del gobierno, 3: Empleado doméstico, 4: Trabajador por cuenta propia, 5: Patrón o empleador, 6: Trabajador familiar sin remuneración, 7: Trabajador sin remuneración en empresas o negocios de otros familiares, 8: Jornalero o peón, 9: otro')
+st.markdown(f'<h1 style="color:#9A7D0A  ;font-size:25px;">{"P6500:"}</h1>', unsafe_allow_html=True)
+st.write('Hace referencia a las ganancias del trabajador en el mes pasado antes de descuentos')
+
+st.markdown(f'<h1 style="color:#0E6655  ;font-size:35px;">{"Gráficas relevantes"}</h1>', unsafe_allow_html=True)
+grafica_relevante_1=Image.open('grafica_relevante_1.png')
+st.markdown(f'<h1 style="color:#9A7D0A  ;font-size:25px;">{"La siguiente gráfica indica la importancia de cada variable en la estimación de los ingresos"}</h1>', unsafe_allow_html=True)
+st.image(grafica_relevante_1)
+grafica_relevante_2=Image.open('grafica_relevante_2.png')
+st.markdown(f'<h1 style="color:#9A7D0A  ;font-size:25px;">{"La siguiente gráfica indica la importancia de cada variable en la estimación de los ingresos, implicando que tan determinantes son al estimar un menor salario o un mayor salario"}</h1>', unsafe_allow_html=True)
+st.image(grafica_relevante_2)
+
+st.markdown(f'<h1 style="color:#0E6655  ;font-size:35px;">{"Link al notebook de entrenamiento del modelo"}</h1>', unsafe_allow_html=True)
+
+
+
+Archivo_2 = open('Archivo_modelo_arreglado','rb')
+lista_1 = pk.load(Archivo_2)
+print(lista_1)
+
+
+st.markdown(f'<h1 style="color:#E3C166  ;font-size:35px;">{"INTERACCIÓN"}</h1>', unsafe_allow_html=True)
+
+st.markdown(f'<h1 style="color:#000000  ;font-size:25px;">{"Afiliación a una aseguradora de riesgos profesionales"}</h1>', unsafe_allow_html=True)
+afiliación_aseg = st.selectbox(
+    '¿Cuenta con una afiliación a una aseguradora de riesgos profesionales?',
+    ('1. SI', '2. NO', '3. NO SABE/NO RESPONDE'))
+
+st.markdown(f'<h1 style="color:#000000  ;font-size:25px;">{"Ganancias el mes pasado antes de descuentos"}</h1>', unsafe_allow_html=True)
+number_ingresos = st.number_input('Ingrese la cantidad total de sus ingresos antes de desceuntos en pesos colombianos')
+st.write('La cantidad total de sus ingresos antes de descuentos es $', number_ingresos, 'de pesos colombianos')
+
+
+st.markdown(f'<h1 style="color:#000000  ;font-size:25px;">{"Meses en la empresa"}</h1>', unsafe_allow_html=True)
+tiempo_trabajado = st.slider('¿Cuantos meses lleva en la misma empresa? Escriba 0 si es menor de 1', 0, 100, 0)
+st.write("Usted trabaja", tiempo_trabajado, 'meses en la misma empresa')
+
+st.markdown(f'<h1 style="color:#000000  ;font-size:25px;">{" Horas trabajadas a la semana"}</h1>', unsafe_allow_html=True)
+horas_trabajadas = st.number_input('Ingrese la cantidad total de horas que trabaja normalmente')
+st.write('La cantidad total de horas que trabaja normalmente ', horas_trabajadas, 'de pesos colombianos')
+
+st.markdown(f'<h1 style="color:#000000  ;font-size:25px;">{"Posición en el trabajo"}</h1>', unsafe_allow_html=True)
+posición_trab = st.selectbox(
+    '¿Cual es su posición en el trabajo actual?',
+    ('1: Obrero o empleado de empresa particular', '2: Obrero o empleado del gobierno', '3: Empleado doméstico', '4: Trabajador por cuenta propia', '5: Patrón o empleador', '6: Trabajador familiar sin remuneración', '7: Trabajador sin remuneración en empresas o negocios de otros familiares', '8: Jornalero o peón', '9: otro'))
+
+st.write('Su posición en el trabajo es', posición_trab)
+
+st.markdown(f'<h1 style="color:#000000  ;font-size:25px;">{"horas adicionales"}</h1>', unsafe_allow_html=True)
+horas_add = st.slider('¿Cuantos horas adicionales puede trabajar a la semana?', 0, 100, 0)
+st.write("Usted trabaja", horas_add, 'meses en la misma empresa')
+
+
+st.markdown(f'<h1 style="color:#000000  ;font-size:25px;">{"Subsidio familiar"}</h1>', unsafe_allow_html=True)
+
+subsidio = st.selectbox(
+    '¿Cuenta con un subsidio familiar?',
+    ('1. SI', '2. NO', '3. NO SABE/NO RESPONDE'))
+st.write('Recibió ingresos por horas extra el mes pasado?', subsidio)
+
+
+
+
+
+
+if horas_add == '1. SI':
+    horas_add = 1
+if horas_add == '2. NO':
+    horas_add = 2
+if horas_add == '3. NO SABE/NO RESPONDE':
+    horas_add = 3
+
+if subsidio == '1. SI':
+    subsidio = 1
+if subsidio == '2. NO':
+    subsidio = 2
+if subsidio == '3. NO SABE/NO RESPONDE':
+    subsidio = 3
+
+if afiliación_aseg == '1. SI':
+    afiliación_aseg = 1
+if afiliación_aseg == '2. NO':
+    afiliación_aseg = 2
+if afiliación_aseg == '3. NO SABE/NO RESPONDE':
+    afiliación_aseg = 3
+
+
+if posición_trab == '1: Obrero o empleado de empresa particular':
+    posición_trab = 1
+if posición_trab == '2: Obrero o empleado del gobierno':
+    posición_trab = 2
+if posición_trab == '3: Empleado doméstico':
+    posición_trab = 3
+if posición_trab == '4: Trabajador por cuenta propia':
+    posición_trab = 4
+if posición_trab == '5: Patrón o empleador':
+    posición_trab = 5
+if posición_trab == '6: Trabajador familiar sin remuneración':
+    posición_trab = 6
+if posición_trab == '7: Trabajador sin remuneración en empresas o negocios de otros familiares':
+    posición_trab = 7
+if posición_trab == '8: Jornalero o peón':
+    posición_trab = 8
+if posición_trab == '9: otro':
+    posición_trab = 9
+
+if number_ingresos and  horas_trabajadas and tiempo_trabajado:
+    prediccion = lista_1.predict(np.array([afiliación_aseg, number_ingresos, horas_trabajadas, posición_trab, horas_add, subsidio, tiempo_trabajado]).reshape(1,7))
+    st.write('su salario será de', prediccion[0]) 
